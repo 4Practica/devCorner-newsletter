@@ -5,7 +5,13 @@
 	"main": "index.js",
 	"scripts": {
 		"start": "node index.js",
-		"dev": "nodemon index.js"
+		"dev": "nodemon index.js",
+		"docker:error": "if [ -z \"${npm_config_tag}\" ]; then echo \"Error: El parámetro --tag es obligatorio. Ejemplo: npm run docker:<action> --tag=1.0.0\"; exit 1; fi",
+		"docker:login": "docker login",
+		"docker:build": "npm run docker:error && docker build . -t jdvd01/devcorner-newsletter:${npm_config_tag}",
+		"docker:latest": "npm run docker:error && docker tag jdvd01/devcorner-newsletter:${npm_config_tag} jdvd01/devcorner-newsletter:latest",
+		"docker:push": "npm run docker:error && docker push jdvd01/devcorner-newsletter:${npm_config_tag} && docker push jdvd01/devcorner-newsletter:latest",
+		"docker:deploy": "npm run docker:error && npm run docker:build && npm run docker:latest && npm run docker:push"
 	},
 	"dependencies": {
 		"axios": "^1.6.8",
