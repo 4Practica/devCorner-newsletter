@@ -12,6 +12,12 @@ services:
       - BREVO_TEMPLATE_ID_NEW_POST=${BREVO_TEMPLATE_ID_NEW_POST}
       - FROM_NAME=${FROM_NAME}
       - FROM_EMAIL=${FROM_EMAIL}
+    networks:
+      - newsletter
     env_file:
       - .env
     restart: unless-stopped
+
+networks:
+  newsletter:
+    external: true
