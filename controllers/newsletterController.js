@@ -20,11 +20,7 @@ export const registerSubscriber = async (req, res, next) => {
 
 export const sendNewsletter = async (req, res, next) => {
 	try {
-		const subscribers = [
-			{ email: "velasquezdenorajose@gmail.com" },
-			{ email: "jvdenora@gmail.com" },
-		];
-
+		const subscribers = req.body.subscribers; // Array of subscriber objects with email property
 		for (const subscriber of subscribers) {
 			await sendEmailTo(subscriber.email, env.BREVO_TEMPLATE_ID_NEW_POST);
 		}
