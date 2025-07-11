@@ -1,0 +1,18 @@
+version: '3.8'
+
+services:
+  newsletter:
+    build: .
+    ports:
+      - "${PORT:-3001}:3001"
+    environment:
+      - PORT=${PORT}
+      - API_KEY=${API_KEY}
+      - BREVO_API_KEY=${BREVO_API_KEY}
+      - BREVO_TEMPLATE_ID_WELCOME=${BREVO_TEMPLATE_ID_WELCOME}
+      - BREVO_TEMPLATE_ID_NEW_POST=${BREVO_TEMPLATE_ID_NEW_POST}
+      - FROM_NAME=${FROM_NAME}
+      - FROM_EMAIL=${FROM_EMAIL}
+    env_file:
+      - .env
+    restart: unless-stopped
