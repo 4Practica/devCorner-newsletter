@@ -1,7 +1,6 @@
-version: '3.8'
-
 services:
   newsletter:
+    image: jdvd01/devcorner-newsletter:latest
     build: .
     ports:
       - "${PORT:-3001}:3001"
