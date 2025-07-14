@@ -11,7 +11,12 @@ export const registerSubscriber = async (req, res, next) => {
 
 		// Aquí podrías guardar el email en tu CMS o DB si lo deseas
 
-		await sendEmailTo(email, env.BREVO_TEMPLATE_ID_WELCOME);
+		const emailInfo = await sendEmailTo(email, env.BREVO_TEMPLATE_ID_WELCOME);
+
+		if (!emailInfo.messageId) {
+			return res.status(500).json({ message: "Failed to send welcome email" });
+		}
+
 		res.status(200).json({ message: "Welcome email sent successfully" });
 	} catch (err) {
 		next(err);
