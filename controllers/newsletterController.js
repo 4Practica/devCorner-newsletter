@@ -1,4 +1,4 @@
-import { sendEmailTo } from "../services/mailService.js";
+import { addEmailToList, sendEmailTo } from "../services/mailService.js";
 import { validateEmail } from "../utils/validateEmail.js";
 import { env } from "../utils/env.js";
 
@@ -9,11 +9,10 @@ export const registerSubscriber = async (req, res, next) => {
 			return res.status(400).json({ message: "Invalid email address" });
 		}
 
-		// Aquí podrías guardar el email en tu CMS o DB si lo deseas
-
+		const added = await addEmailToList(email);
 		const emailInfo = await sendEmailTo(email, env.BREVO_TEMPLATE_ID_WELCOME);
 
-		if (!emailInfo.messageId) {
+		if (!emailInfo.messageId || !added.id) {
 			return res.status(500).json({ message: "Failed to send welcome email" });
 		}
 
